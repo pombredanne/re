@@ -1,11 +1,12 @@
-import collections
+from __future__ import absolute_import
+
 import logging
 import os
 import re
 
-from consts import *
-from lib import OrderedDict
-from model.git import GitRepo
+from reps import consts
+from reps.compat import OrderedDict
+from reps.model.git import GitRepo
 
 logger = logging
 
@@ -29,8 +30,10 @@ class RepoManager(object):
 
         def clear_list(lst):
             while True:
-                try: lst.pop()
-                except IndexError: break
+                try:
+                    lst.pop()
+                except IndexError:
+                    break
 
         def at_location(relpath, dirs, files):
             depth = len(relpath.split(os.sep)) - 1
@@ -52,7 +55,7 @@ class RepoManager(object):
                 clear_list(dirs)
 
             # reached marker
-            if depth > 0 and REPO_CONFIG in files:
+            if depth > 0 and consts.REPO_CONFIG in files:
                 clear_list(dirs)
 
         dispatch = {}
